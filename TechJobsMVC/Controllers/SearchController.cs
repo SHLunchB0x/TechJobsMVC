@@ -20,7 +20,6 @@ namespace TechJobsMVC.Controllers
         }
 
         // TODO #3: Create an action method to process a search request and render the updated search view. 
-        [HttpPost]
         //TO DENNIS - Something to do with Redirect? Routing? Action in the form? This part is definitely the problem
         public IActionResult Results(string searchType, string searchTerm)
         {
@@ -31,14 +30,18 @@ namespace TechJobsMVC.Controllers
                 jobs = JobData.FindAll();
                 ViewBag.title = "All Jobs";
             }
-            else
+            else if (!string.IsNullOrEmpty(searchTerm))
             {
                 jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
                 ViewBag.title = "Jobs with " + ListController.ColumnChoices[searchType] + ": " + searchTerm;
+            } else
+            {
+                jobs = null;
+                ViewBag.title = "No search term entered. Please enter a search criteria";
             }
             ViewBag.jobs = jobs;
 
-            return View("/search/index");
+            return View("index");
         }
     }
 }
