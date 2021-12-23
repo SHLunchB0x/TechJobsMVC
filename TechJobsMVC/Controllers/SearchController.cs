@@ -25,7 +25,7 @@ namespace TechJobsMVC.Controllers
         {
             ViewBag.columns = ListController.ColumnChoices;
             List<Job> jobs;
-            if (searchType.ToLower().Equals("all"))
+            if (String.IsNullOrEmpty(searchTerm))
             {
                 jobs = JobData.FindAll();
                 ViewBag.title = "All Jobs";
@@ -37,7 +37,7 @@ namespace TechJobsMVC.Controllers
             } else
             {
                 jobs = null;
-                ViewBag.title = "No search term entered. Please enter a search criteria";
+                ViewBag.title = "Please enter a search criter";
             }
             ViewBag.jobs = jobs;
 
